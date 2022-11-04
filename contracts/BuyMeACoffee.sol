@@ -56,4 +56,11 @@ contract BuyMeACoffee {
     //owner.send() method send the balance to the original deployer of this function
     require(owner.send(address(this).balance));
    }
+   /**
+     * @dev retrieve all memo received and stored in a blockchain.
+    */
+   //view keyword balance it doesn't change anything state variable
+   function getMemos() public view returns(Memo[] memory) {
+    return memos;
+   }
 }
