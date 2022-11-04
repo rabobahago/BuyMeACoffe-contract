@@ -5,6 +5,11 @@
 // Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
 
+async function getBalance(address) {
+  const balanceBigInt = await hre.waffle.ethers.provider.getBalance(address);
+  return hre.ethers.utils.formatEther(balanceBigInt);
+}
+
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
