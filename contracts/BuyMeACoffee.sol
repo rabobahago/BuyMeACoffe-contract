@@ -47,4 +47,13 @@ contract BuyMeACoffee {
        _message
      );
    }
+
+   /**
+     * @dev send the entire balance in this contract to the owner
+    */
+   function withdrawTips() public {
+    //the money in this contract is stored in address(this).balance
+    //owner.send() method send the balance to the original deployer of this function
+    require(owner.send(address(this).balance));
+   }
 }
