@@ -1,12 +1,7 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// When running the script with `npx hardhat run <script>` you'll find the Hardhat
-// Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
 // return the ether balance of a given address
 async function getBalance(address) {
-  const balanceBigInt = await hre.waffle.ethers.provider.getBalance(address);
+  const balanceBigInt = await hre.waffle.provider.getBalance(address);
   return hre.ethers.utils.formatEther(balanceBigInt);
 }
 //log the ether balances for a list of addresses
@@ -28,20 +23,29 @@ async function printMemos(memos) {
   }
 }
 async function main() {
-  // Hardhat always runs the compile task when running scripts with its command
-  // line interface.
-  //
-  // If this script is run directly using `node` you may want to call compile
-  // manually to make sure everything is compiled
-  // await hre.run('compile');
-
-  // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
-
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
+  //get example account
+  const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
+  //console.log(address);
+  //get the contract to deploy and deploy it
+  const BuyMeACoffee = await hre.ethers.getContractFactory("BuyMeACoffee");
+  const buyMeACoffee = await BuyMeACoffee.deploy();
+  await buyMeACoffee.deployed();
+  console.log(`BuyMeACoffee contract deployed to ${buyMeACoffee.address}`);
+  //get balances before coffee purchase
+  const addresses = [
+    owner.address,
+    tipper.address,
+    buyMeACoffee.address,
+    tipper2.address,
+    tipper3.address,
+  ];
+  console.log("==start==");
+  await printBalances(addresses);
+  //buy the owner a few coffees
+  //get balances after the coffee was purchase
+  //withdraw funds.
+  //check balance after withdraw
+  //read all the memos left for the owner
 }
 
 // We recommend this pattern to be able to use async/await everywhere
