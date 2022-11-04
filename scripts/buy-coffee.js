@@ -4,10 +4,18 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
-
+// return the ether balance of a given address
 async function getBalance(address) {
   const balanceBigInt = await hre.waffle.ethers.provider.getBalance(address);
   return hre.ethers.utils.formatEther(balanceBigInt);
+}
+//log the ether balances for a list of addresses
+async function printBalances(addresses) {
+  let idx = 0;
+  for (const address of addresses) {
+    console.log(`address at ${idx} balance:`, await getBalance(address));
+    idx++;
+  }
 }
 
 async function main() {
