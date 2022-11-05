@@ -7,7 +7,7 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   // Contract Address & ABI
-  const contractAddress = "0xDBa03676a2fBb6711CB652beF5B7416A53c1421D";
+  const contractAddress = "0x15c65b9589D01273bd4Ee8e6Ca57A01C10115f64";
   const contractABI = abi.abi;
 
   // Component state
@@ -186,7 +186,7 @@ export default function Home() {
               </div>
               <br />
               <div>
-                <label>Send Albert a message</label>
+                <label>Send Rabo a message</label>
                 <br />
 
                 <textarea
@@ -237,7 +237,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Created by @thatguyintech for Alchemy's Road to Web3 lesson two!
+          Created by @Rabo!
         </a>
       </footer>
     </div>
