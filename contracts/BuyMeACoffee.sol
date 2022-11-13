@@ -41,10 +41,22 @@ contract BuyMeACoffee {
         public
         payable
     {
-        require(msg.value > 0, "can't buy Coffee with 0 eth");
+        require(msg.value > 0, "can't buy Coffee with 0 eth, please add eth.");
         //add a memo to storage
         memos.push(Memo(msg.sender, block.timestamp, _name, _message));
         //emit a log event when a new memo is created
+        emit NewMemo(msg.sender, block.timestamp, _name, _message);
+    }
+
+    function buyMeLargeCoffee(string memory _name, string memory _message)
+        public
+        payable
+    {
+        require(
+            msg.value > 0,
+            "can't buy Coffee with 0.02, please add more ether"
+        );
+        memos.push(Memo(msg.sender, block.timestamp, _name, _message));
         emit NewMemo(msg.sender, block.timestamp, _name, _message);
     }
 
