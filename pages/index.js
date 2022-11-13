@@ -1,4 +1,4 @@
-import abi from "../utils/BuyMeACoffee.json";
+import abi from "../artifacts/contracts/BuyMeACoffee.sol/BuyMeACoffee.json";
 import { ethers } from "ethers";
 import Head from "next/head";
 import Image from "next/image";
@@ -95,7 +95,31 @@ export default function Home() {
       console.log(error);
     }
   };
-
+  const buyLargeCoffee = async () => {
+    try {
+      const { ethereum } = window;
+      const provider = new ethers.providers.Web3Provider(ethereum, "any");
+      const signer = provider.getSigner();
+      const buyMeACoffee = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      );
+      console.log("buy coffee...");
+      const coffeeTxn = await buyMeACoffee.buyMeLargeCoffee(
+        name ? name : "rabo",
+        message ? message : "I love Coffee shops",
+        { value: ethers.utils.parseEther("0.003") }
+      );
+      await coffeeTxn.wait("mined", coffeeTxn.hash);
+      console.log("Coffee Purchased");
+      //clear our input text
+      setName("");
+      setMessage("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // Function to fetch all memos stored on-chain.
   const getMemos = async () => {
     try {
@@ -200,6 +224,9 @@ export default function Home() {
               <div>
                 <button type="button" onClick={buyCoffee}>
                   Send 1 Coffee for 0.001ETH
+                </button>
+                <button type="button" onClick={buyLargeCoffee}>
+                  Send 3 Coffee for 0.003ETH
                 </button>
               </div>
             </form>
